@@ -7,19 +7,21 @@ use FastRoute;
 
 class Router
 {
-    public function setRoutes(Closure $routes) 
+    public function setRoutes() 
     {
+        $routes = include dirname(__DIR__).'/routes.php';
         return FastRoute\simpleDispatcher($routes);
     }
     
 
-    public function runRoute($dispatcher, $uri, $methodHttp) 
+    public function runRoute($dispatcher) 
     {
+        $uri = $_SERVER['REQUEST_URI'];
         if (false !== $pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
         }
-
-        $routeInfo = $dispatcher->dispatch($methodHttp, rawurldecode($uri));
+        
+        $routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], rawurldecode($uri));
         if($routeInfo[0] == FastRoute\Dispatcher::FOUND) {
             // Je vérifie si mon parametre est une chaine de caractere
             if(is_string($routeInfo[1])) {

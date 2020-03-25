@@ -4,16 +4,18 @@ namespace Comito;
 
 class Kernel 
 {
-    private $app;
+    private $router;
+
+    public function __construct()
+    {
+        $this->router = new Router();
+    }
 
     public function run()
     {
-        $this->app = new Application();
-
-        $routes = include dirname(__DIR__).'/routes.php';
-        $dispatcher = $this->app->getRouter()->setRoutes($routes);
+        $dispatcher = $this->router->setRoutes();
         
-        $this->app->getRouter()->runRoute($dispatcher, $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+        $this->router->runRoute($dispatcher);
     }
 
     public function getApp() 
