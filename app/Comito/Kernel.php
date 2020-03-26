@@ -6,6 +6,8 @@ class Kernel
 {
     private $router;
 
+    private $templateEngine;
+
     public function __construct()
     {
         $this->router = new Router();
@@ -14,12 +16,6 @@ class Kernel
     public function run()
     {
         $dispatcher = $this->router->setRoutes();
-        
-        $this->router->runRoute($dispatcher);
-    }
-
-    public function getApp() 
-    {
-        return $this->app;
+        $this->router->dispatching($dispatcher);
     }
 }

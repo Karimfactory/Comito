@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-class Home 
+use Comito\AbstractController;
+
+class Home extends AbstractController
 {
     public function print() 
     {
-        include dirname(dirname(__DIR__)) . '/templates/home.phtml';
+        return $this->render('home');
     }
 }

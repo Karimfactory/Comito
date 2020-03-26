@@ -2,7 +2,6 @@
 
 namespace Comito;
 
-use Closure;
 use FastRoute;
 
 class Router
@@ -12,9 +11,8 @@ class Router
         $routes = include dirname(__DIR__).'/routes.php';
         return FastRoute\simpleDispatcher($routes);
     }
-    
-
-    public function runRoute($dispatcher) 
+ 
+    public function dispatching($dispatcher) 
     {
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== $pos = strpos($uri, '?')) {
@@ -41,7 +39,7 @@ class Router
                 $method = $routeInfo[1];
             }
             // on execute avec call_user_func_array
-            call_user_func_array($method, $routeInfo[2]); 
+            echo call_user_func_array($method, $routeInfo[2]); 
         }
     }
 }
